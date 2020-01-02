@@ -7,23 +7,33 @@ class Solution(object):
         result = 0
 
         def mark_island(grid, x, y, visited):
+            # Checks if position is within grid
             if x < 0 or x > len(grid) - 1 or y < 0 or y > len(grid[x]) - 1:
-                return False
-            if visited[x][y] == True:
-                return False
-            visited[x][y] = True
-            if grid[x][y] == '0':
-                return False
+                return ''
 
+            # Checks if position has been visited
+            if visited[x][y] == True:
+                return ''
+            visited[x][y] = True
+            
+            # Checks if position is 0
+            if grid[x][y] == '0':
+                return ''
+
+            # Repeat the same procedure for adjacent positions at x and y
             mark_island(grid, x - 1, y, visited)
             mark_island(grid, x + 1, y, visited)
             mark_island(grid, x, y - 1, visited)
             mark_island(grid, x, y + 1, visited)
         
+        # Creates an empty positions visited checker matrix
         visited = []
         for i in range(len(grid)):
-            visited.append([[] for item in grid[0]])
+            visited.append(['' for item in grid[0]])
 
+        # Check all positions, if position hasn't been visited and is iguals '1' 
+        # sum 1 to result and turn visited position True
+        # All the separated groups of 1 will be counted
         for x in range(len(grid)):
             for y in range(len(grid[x])):
                 if not visited[x][y] and grid[x][y] == '1':
